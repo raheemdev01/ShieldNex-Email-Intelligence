@@ -47,20 +47,20 @@
       <div class="results-title"><div><span class="step-label">02 / RESULTS</span><h2>Verification summary</h2><p id="run-meta" class="section-subtitle"></p></div><button id="download-btn" class="secondary-btn" type="button">↓ Export CSV</button></div>
       <div class="stats-grid">
         <article class="stat-card"><span class="stat-label">TOTAL CHECKED</span><strong id="total-count">0</strong><small>Addresses processed</small></article>
-        <article class="stat-card stat-good"><span class="stat-label">DELIVERED*</span><strong id="delivered-count">0</strong><small>Domain mail signal found</small></article>
+        <article class="stat-card stat-good"><span class="stat-label">DOMAIN CONFIGURED</span><strong id="delivered-count">0</strong><small>Domain mail signal found</small></article>
         <article class="stat-card stat-bad"><span class="stat-label">LIKELY TO BOUNCE</span><strong id="bounce-count">0</strong><small>Invalid format or strong failure signal</small></article>
         <article class="stat-card stat-unknown"><span class="stat-label">UNKNOWN</span><strong id="unknown-count">0</strong><small>Insufficient DNS evidence</small></article>
       </div>
-      <div class="result-tools"><label class="search-box"><span>⌕</span><input id="result-search" type="search" placeholder="Search addresses or explanations…" aria-label="Search results"></label><label class="filter-label">Filter <select id="result-filter"><option value="all">All results</option><option value="delivered">Delivered</option><option value="bounce">Likely to Bounce</option><option value="unknown">Unknown</option></select></label><span id="visible-count" class="visible-count"></span></div>
+      <div class="result-tools"><label class="search-box"><span>⌕</span><input id="result-search" type="search" placeholder="Search addresses or explanations…" aria-label="Search results"></label><label class="filter-label">Filter <select id="result-filter"><option value="all">All results</option><option value="delivered">Domain Configured</option><option value="bounce">Likely to Bounce</option><option value="unknown">Unknown</option></select></label><span id="visible-count" class="visible-count"></span></div>
       <div class="table-wrap"><table><thead><tr><th>EMAIL ADDRESS</th><th>RESULT</th><th>WHY THIS RESULT</th></tr></thead><tbody id="results-body"></tbody></table><div id="no-results" class="empty-state hidden">No results match your search.</div></div><div id="pagination" class="pagination" aria-label="Result pages"></div>
-      <p class="fine-print">* “Delivered” is the task's category for a positive domain mail-routing signal. It does not prove that a specific mailbox exists or that a message will arrive.</p>
+      <p class="fine-print">* “Domain Configured” means the domain has a positive mail-routing signal. It does not prove that a specific mailbox exists or that a message will arrive.</p>
       <div class="result-actions"><button id="copy-summary-btn" class="secondary-btn" type="button">Copy summary</button><button id="copy-unknown-btn" class="secondary-btn" type="button">Copy unknown addresses</button></div>
     </section>
 
     <section id="how-it-works" class="how-section">
       <div class="section-heading"><span class="step-label">03 / INTERPRETATION</span><h2>Understand the signal.</h2><p>Each result includes the evidence behind the classification—without claiming mailbox-level certainty.</p></div>
       <div class="legend-grid">
-        <article class="legend-card"><span class="legend-icon icon-green">✓</span><div><h3>Delivered*</h3><p>Address syntax is valid and domain mail-routing evidence was found. The mailbox and final delivery are not confirmed.</p></div></article>
+        <article class="legend-card"><span class="legend-icon icon-green">✓</span><div><h3>Domain Configured</h3><p>The domain has mail-routing evidence. The specific mailbox and final delivery are not confirmed.</p></div></article>
         <article class="legend-card"><span class="legend-icon icon-red">×</span><div><h3>Likely to Bounce</h3><p>The address format is invalid or a strong domain failure signal was returned. The explanation states the reason.</p></div></article>
         <article class="legend-card"><span class="legend-icon icon-amber">?</span><div><h3>Unknown</h3><p>DNS restrictions, timeouts, or ambiguous responses prevent a reliable conclusion.</p></div></article>
       </div>

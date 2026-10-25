@@ -222,7 +222,7 @@ resultFilter.addEventListener('change', () => { currentPage = 1; renderResults()
 document.getElementById('copy-summary-btn').addEventListener('click', () => {
   if (!latestResults.length) return showToast('No results to copy.');
   const counts = latestResults.reduce((acc, r) => { acc[r.kind]++; return acc; }, {delivered: 0, bounce: 0, unknown: 0});
-  copyText(`ShieldNex Email Checker summary\nTotal: ${latestResults.length}\nDelivered (domain signal): ${counts.delivered}\nLikely to Bounce: ${counts.bounce}\nUnknown: ${counts.unknown}\nNote: mailbox existence and actual delivery are not confirmed.`, 'Summary copied.');
+  copyText(`ShieldNex Email Checker summary\nTotal: ${latestResults.length}\nDomain Configured (domain signal): ${counts.delivered}\nLikely to Bounce: ${counts.bounce}\nUnknown: ${counts.unknown}\nNote: mailbox existence and actual delivery are not confirmed.`, 'Summary copied.');
 });
 document.getElementById('copy-unknown-btn').addEventListener('click', () => {
   const addresses = latestResults.filter(r => r.kind === 'unknown').map(r => r.email);
