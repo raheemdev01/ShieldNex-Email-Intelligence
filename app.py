@@ -86,7 +86,7 @@ def check_email(raw_address: str, domain_cache: dict[str, dict]) -> dict:
     domain = normalized.rsplit("@", 1)[1]
     signal = check_domain(domain, domain_cache)
     details = dict(signal)
-    details.update({"email": address, "status": {"delivered": "Delivered", "bounce": "Likely to Bounce", "unknown": "Unknown"}[signal["kind"]], "basis": "domain"})
+    details.update({"email": address, "status": {"delivered": "Domain Configured", "bounce": "Likely to Bounce", "unknown": "Unknown"}[signal["kind"]], "basis": "domain"})
     return details
 
 
