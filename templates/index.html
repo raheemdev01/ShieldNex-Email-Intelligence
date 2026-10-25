@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1019">
+  <meta name="description" content="Check email formatting and domain mail-routing signals in batches. No messages sent and no mailbox probing.">
+  <title>ShieldNex | Email Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="ShieldNex Email Intelligence home">
+      <span class="brand-mark">S<span>✦</span></span>
+      <span class="brand-copy"><strong>SHIELDNEX</strong><small>EMAIL INTELLIGENCE</small></span>
+    </a>
+    <div class="header-right"><span class="top-tag"><span class="live-dot"></span> DOMAIN CHECKER</span><a href="#how-it-works" class="header-link">How it works ↗</a></div>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow"><span></span> SIGNALS, NOT GUESSES</div>
+      <h1>Make your email list<br><em>more informed.</em></h1>
+      <p class="hero-copy">Review address formatting and domain mail-routing signals in seconds. No test emails. No mailbox probing. Clear explanations for every result.</p>
+      <div class="trust-row"><span>✓ Syntax checks</span><span>✓ Domain-level DNS</span><span>✓ CSV export</span><span>✓ No email sent</span></div>
+    </section>
+
+    <section class="workspace panel" aria-label="Email checker">
+      <div class="workspace-head">
+        <div><span class="step-label">01 / INPUT</span><h2>Check email addresses</h2><p class="section-subtitle">Paste a list or upload a .txt / .csv file. Up to 5,000 addresses per run.</p></div>
+        <span class="limit-pill">{{ max_batch_size }} / BATCH · UP TO 5,000 / RUN</span>
+      </div>
+      <label for="emails" class="field-label">EMAIL LIST</label>
+      <textarea id="emails" maxlength="5000000" placeholder="alex@example.com&#10;sam@company.org&#10;hello@domain.net" spellcheck="false" autocomplete="off" aria-describedby="input-help"></textarea>
+      <div class="input-meta"><span id="input-count">0 entered · 5,000 maximum per run</span><span id="input-help">One per line, comma, or semicolon</span></div>
+      <div id="limit-warning" class="inline-warning hidden" role="alert">Lists are automatically processed in batches of {{ max_batch_size }}. Maximum 5,000 addresses per run.</div>
+      <div class="actions"><button id="check-btn" class="primary-btn" type="button"><span class="btn-icon">↗</span><span>Check addresses</span></button><button id="clear-btn" class="secondary-btn" type="button">Clear</button><label class="secondary-btn upload-btn" for="file-input">↑ Import file</label><input id="file-input" type="file" accept=".txt,.csv,text/plain,text/csv" hidden></div>
+      <div id="loading-state" class="loading-state hidden"><span class="spinner"></span><div><strong>Checking signals…</strong><small>DNS lookups can take a moment. Keep this tab open.</small></div></div>
+      <p class="privacy-note"><span>◇</span> Addresses are processed when submitted and are not intentionally stored. Avoid entering confidential lists.</p>
+    </section>
+
+    <section id="results-section" class="results-section hidden" aria-live="polite">
+      <div class="results-title"><div><span class="step-label">02 / RESULTS</span><h2>Verification summary</h2><p id="run-meta" class="section-subtitle"></p></div><button id="download-btn" class="secondary-btn" type="button">↓ Export CSV</button></div>
+      <div class="stats-grid">
+        <article class="stat-card"><span class="stat-label">TOTAL CHECKED</span><strong id="total-count">0</strong><small>Addresses processed</small></article>
+        <article class="stat-card stat-good"><span class="stat-label">DELIVERED*</span><strong id="delivered-count">0</strong><small>Domain mail signal found</small></article>
+        <article class="stat-card stat-bad"><span class="stat-label">LIKELY TO BOUNCE</span><strong id="bounce-count">0</strong><small>Invalid format or strong failure signal</small></article>
+        <article class="stat-card stat-unknown"><span class="stat-label">UNKNOWN</span><strong id="unknown-count">0</strong><small>Insufficient DNS evidence</small></article>
+      </div>
+      <div class="result-tools"><label class="search-box"><span>⌕</span><input id="result-search" type="search" placeholder="Search addresses or explanations…" aria-label="Search results"></label><label class="filter-label">Filter <select id="result-filter"><option value="all">All results</option><option value="delivered">Delivered</option><option value="bounce">Likely to Bounce</option><option value="unknown">Unknown</option></select></label><span id="visible-count" class="visible-count"></span></div>
+      <div class="table-wrap"><table><thead><tr><th>EMAIL ADDRESS</th><th>RESULT</th><th>WHY THIS RESULT</th></tr></thead><tbody id="results-body"></tbody></table><div id="no-results" class="empty-state hidden">No results match your search.</div></div><div id="pagination" class="pagination" aria-label="Result pages"></div>
+      <p class="fine-print">* “Delivered” is the task's category for a positive domain mail-routing signal. It does not prove that a specific mailbox exists or that a message will arrive.</p>
+      <div class="result-actions"><button id="copy-summary-btn" class="secondary-btn" type="button">Copy summary</button><button id="copy-unknown-btn" class="secondary-btn" type="button">Copy unknown addresses</button></div>
+    </section>
+
+    <section id="how-it-works" class="how-section">
+      <div class="section-heading"><span class="step-label">03 / INTERPRETATION</span><h2>Understand the signal.</h2><p>Each result includes the evidence behind the classification—without claiming mailbox-level certainty.</p></div>
+      <div class="legend-grid">
+        <article class="legend-card"><span class="legend-icon icon-green">✓</span><div><h3>Delivered*</h3><p>Address syntax is valid and domain mail-routing evidence was found. The mailbox and final delivery are not confirmed.</p></div></article>
+        <article class="legend-card"><span class="legend-icon icon-red">×</span><div><h3>Likely to Bounce</h3><p>The address format is invalid or a strong domain failure signal was returned. The explanation states the reason.</p></div></article>
+        <article class="legend-card"><span class="legend-icon icon-amber">?</span><div><h3>Unknown</h3><p>DNS restrictions, timeouts, or ambiguous responses prevent a reliable conclusion.</p></div></article>
+      </div>
+      <div class="method-note"><span class="method-icon">i</span><p><strong>Methodology note</strong><br>This tool does not send email or probe mailboxes. DNS checks can be blocked by hosting providers; when the evidence is inconclusive, the app returns Unknown. Repeated addresses remain in the output, while repeated domain lookups are cached within a batch.</p></div>
+    </section>
+    <footer><span>SHIELDNEX · EMAIL INTELLIGENCE</span><span>Domain signals only · No messages sent</span></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
